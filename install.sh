@@ -61,5 +61,8 @@ dos2unix "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
 chmod a+x "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
 #============= NAMCO 2x6 INSTALLATION =============#
 
+# Supression du fichier install par precautions
+rm -f /userdata/system/dcg/install.sh
+
 echo "System Launcher Installed!"
 
