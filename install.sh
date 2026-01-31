@@ -31,7 +31,7 @@ set -e
 
 # Download and Install BSA
 (
-	url="https://github.com/DreamerCG/dcg-launcher/archive/refs/heads/main.tar.gz?token=GHSAT0AAAAAADSSUPKLABR4EHK7VXLBDSME2L576KQ"
+	url="https://github.com/DreamerCG/dcg-launcher/archive/refs/heads/main.tar.gz"
     echo $url;
 	BSA_path="/userdata/system/dcg"
 
