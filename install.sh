@@ -57,7 +57,6 @@ cp -rf /userdata/system/dcg/system/namco2x6/config/es_systems_namco2x6.cfg /user
 cp -rf /userdata/system/dcg/system/namco2x6/evmapy/namco2x6.keys /userdata/system/configs/evmapy/namco2x6.keys
 
 # Applications des droits
-dos2unix "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
 chmod a+x "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
 #============= NAMCO 2x6 INSTALLATION =============#
 
