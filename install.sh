@@ -54,7 +54,7 @@ set -e
 #============= NAMCO 2x6 INSTALLATION =============#
 # Copier les fichiers de configuration 
 cp -rf /userdata/system/dcg/system/namco2x6/config/es_systems_namco2x6.cfg /userdata/system/configs/emulationstation/es_systems_namco2x6.cfg
-cp -rf /userdata/system/dcg/system/namco2x6/evmappy/namco2x6.keys /userdata/system/configs/evmappy/namco2x6.keys
+cp -rf /userdata/system/dcg/system/namco2x6/evmapy/namco2x6.keys /userdata/system/configs/evmapy/namco2x6.keys
 
 # Applications des droits
 chmod a+x /userdata/system/dcg/system/namco2x6/appimage/play.AppImage
