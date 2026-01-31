@@ -32,7 +32,7 @@ set -e
 # Download and Install BSA
 (
 	url="https://github.com/DreamerCG/dcg-launcher/archive/refs/heads/main.tar.gz?token=GHSAT0AAAAAADSSUPKLABR4EHK7VXLBDSME2L576KQ"
-
+    echo $url;
 	BSA_path="/userdata/system/dcg"
 
 	# Retrieve and Extract BSA to /userdata/BSA (will overwrite)
