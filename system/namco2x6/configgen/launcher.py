@@ -20,7 +20,7 @@ if "-emulator" in sys.argv:
     emulator_name = sys.argv[sys.argv.index("-emulator") + 1]
 
 def ensure_namco2x6_keys():
-    src = Path("/userdata/system/dcg/namco2x6/evmappy/namco2x6.keys")
+    src = Path("/userdata/system/dcg/namco2x6/evmapy/namco2x6.keys")
     dst_dir = Path("/userdata/system/configs/evmapy")
     dst = dst_dir / "namco2x6.keys"
 
@@ -45,7 +45,7 @@ def _new_get_generator(emulator: str):
     print(f"Selected Rom : {rom}", file=sys.stderr)    
 
     if emulator == 'play':
-        from playGeneratorv2 import PlayGenerator
+        from playGenerator import PlayGenerator
         return PlayGenerator()
 
     #fallback to batocera generators

@@ -1,295 +1,276 @@
 from __future__ import annotations
 
-import re
+import sys
+import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import TYPE_CHECKING, Final, cast
+from typing import TYPE_CHECKING, Final
 
 import evdev
-
 
 from configgen import Command
 from configgen.batoceraPaths import CACHE, CONFIGS, SAVES, configure_emulator, mkdir_if_not_exists
 from configgen.generators.Generator import Generator
 
-playConfig: Final = CONFIGS / 'play'
-playSaves: Final = SAVES / 'play'
-playConfigFile: Final = playConfig / 'Play Data Files' / 'config.xml'
-playInputFile: Final = playConfig / 'Play Data Files' / 'inputprofiles' / 'default.xml'
+# ------------------------------------------------------------
+# Paths
+# ------------------------------------------------------------
+
+PLAY_CONFIG: Final = CONFIGS / "play"
+PLAY_SAVES: Final = SAVES / "play"
+PLAY_CONFIG_FILE: Final = PLAY_CONFIG / "Play Data Files" / "config.xml"
+PLAY_INPUT_FILE: Final = PLAY_CONFIG / "Play Data Files" / "inputprofiles" / "default.xml"
+
+
+# ------------------------------------------------------------
+# Preferences
+# ------------------------------------------------------------
+
+PREFERENCES = {
+    "ps2.arcaderoms.directory": {"Type": "path", "Value": "/userdata/roms/namco2x6"},
+    "ui.showexitconfirmation": {"Type": "boolean", "Value": "false"},
+    "ui.pausewhenfocuslost": {"Type": "boolean", "Value": "false"},
+    "ui.showeecpuusage": {"Type": "boolean", "Value": "false"},
+    "ps2.limitframerate": {"Type": "boolean", "Value": "true"},
+    "renderer.widescreen": {"Type": "boolean", "Value": "false"},
+    "system.language": {"Type": "integer", "Value": "2"},
+    "video.gshandler": {"Type": "integer", "Value": "0"},
+    "renderer.opengl.resfactor": {"Type": "integer", "Value": "1"},
+    "renderer.presentationmode": {"Type": "integer", "Value": "1"},
+    "renderer.opengl.forcebilineartextures": {"Type": "boolean", "Value": "false"},
+}
+
+OVERRIDES = {
+    "ps2.limitframerate": "play_vsync",
+    "renderer.widescreen": "play_widescreen",
+    "system.language": "play_language",
+    "video.gshandler": "play_api",
+    "renderer.opengl.resfactor": "play_scale",
+    "renderer.presentationmode": "play_mode",
+    "renderer.opengl.forcebilineartextures": "play_filter",
+}
+
+
+# ------------------------------------------------------------
+# Input mappings
+# ------------------------------------------------------------
+
+BASE_EVMAP = {
+    "a": [16],
+    "b": [17],
+    "x": [18],
+    "y": [19],
+    "start": [2],
+    "select": [6],
+    "pageup": [20],
+    "pagedown": [22],
+    "joystick1left": [105, 106],
+    "joystick1up": [103, 108],
+    "joystick1up_pedal": [23, 21],
+    "up": [103],
+    "down": [108],
+    "left": [105],
+    "right": [106],
+    "l2": [21],
+    "r2": [23],
+    "l3": [24],
+    "r3": [25],
+}
+
+PLAYER_OFFSET = {1: 0, 2: 14}
+
+
+def build_evmap(player: int) -> dict[str, list[int]]:
+    offset = PLAYER_OFFSET[player]
+    return {k: [v + offset for v in values] for k, values in BASE_EVMAP.items()}
+
+
+PLAY_MAPPING_BASE = {
+    "square": "y",
+    "triangle": "x",
+    "circle": "b",
+    "cross": "a",
+    "start": "start",
+    "select": "select",
+    "l2": "pageup",
+    "r2": "pagedown",
+    "analog_left_x": "joystick1left",
+    "analog_left_y": "joystick1up",
+    "dpad_up": "up",
+    "dpad_down": "down",
+    "dpad_left": "left",
+    "dpad_right": "right",
+    "l1": "l2",
+    "r1": "r2",
+    "l3": "l3",
+    "r3": "r3",
+}
+
+
+GAME_MAPPING_RULES = [
+    ("prdgp03", lambda m: (m.update({"r1": "y"}), m.pop("square", None))),
+    ("fghtjam", lambda m: m.update({"triangle": "l2", "square": "x", "r3": "y"})),
+    ("superdbz", lambda m: m.update({"square": "x", "r3": "y"})),
+    ("tekken", lambda m: m.update({"square": "x", "r3": "y"})),
+    ("acedriv3", lambda m: (
+        m.update({"analog_left_y": "joystick1up_pedal"}),
+        m.pop("l1", None),
+        m.pop("r1", None),
+    )),
+    ("wangan", lambda m: (
+        m.update({"analog_left_y": "joystick1up_pedal"}),
+        m.pop("l1", None),
+        m.pop("r1", None),
+    )),
+]
+
+
+# ------------------------------------------------------------
+# Input helpers (CRITICAL for Play standalone)
+# ------------------------------------------------------------
+
+PAD_GUID = "1:0:1:0:1:0"
+PROVIDER_ID = 1702257782
+KEY_TYPE = 0
+
+
+def add_binding(input_root, nplayer, play_key, idx, key_code):
+    base = f"input.pad{nplayer}.{play_key}.bindingtarget{idx}"
+
+    ET.SubElement(input_root, "Preference",
+        Name=f"{base}.deviceId", Type="string", Value=PAD_GUID)
+
+    ET.SubElement(input_root, "Preference",
+        Name=f"{base}.keyId", Type="integer", Value=str(key_code))
+
+    ET.SubElement(input_root, "Preference",
+        Name=f"{base}.keyType", Type="integer", Value=str(KEY_TYPE))
+
+    ET.SubElement(input_root, "Preference",
+        Name=f"{base}.providerId", Type="integer", Value=str(PROVIDER_ID))
+
+
+# ------------------------------------------------------------
+# Generator
+# ------------------------------------------------------------
 
 class PlayGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
-        return {
-            "name": "play",
-            "keys": { "exit": ["KEY_LEFTALT", "KEY_F4"] }
-        }
+        return {"name": "play", "keys": {"exit": ["KEY_LEFTALT", "KEY_F4"]}}
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
-        # Create necessary directories
-        mkdir_if_not_exists(playConfig)
-        mkdir_if_not_exists(playSaves)
 
-        ## Work with the config.xml file
-        root = ET.Element('Config')
+        mkdir_if_not_exists(PLAY_CONFIG)
+        mkdir_if_not_exists(PLAY_SAVES)
 
-        # Dictionary of preferences and defaults
-        preferences = {
-            'ps2.arcaderoms.directory': {'Type': 'path', 'Value': '/userdata/roms/namco2x6'},
-            'ui.showexitconfirmation': {'Type': 'boolean', 'Value': 'false'},
-            'ui.pausewhenfocuslost': {'Type': 'boolean', 'Value': 'false'},
-            'ui.showeecpuusage': {'Type': 'boolean', 'Value': 'false'},
-            'ps2.limitframerate': {'Type': 'boolean', 'Value': 'true'},
-            'renderer.widescreen': {'Type': 'boolean', 'Value': 'false'},
-            'system.language': {'Type': 'integer', 'Value': '1'},
-            'video.gshandler': {'Type': 'integer', 'Value': '0'},
-            'renderer.opengl.resfactor': {'Type': 'integer', 'Value': '1'},
-            'renderer.presentationmode': {'Type': 'integer', 'Value': '1'},
-            'renderer.opengl.forcebilineartextures': {'Type': 'boolean', 'Value': 'false'},
-        }
-
-        # Check if the configuration file exists
-        if playConfigFile.exists():
-            tree = ET.parse(playConfigFile)
+        # -------- config.xml --------
+        if PLAY_CONFIG_FILE.exists():
+            tree = ET.parse(PLAY_CONFIG_FILE)
             root = tree.getroot()
+        else:
+            root = ET.Element("Config")
 
-        # Add or update preferences
-        for pref_name, pref_attrs in preferences.items():
-            pref_element = root.find(f".//Preference[@Name='{pref_name}']")
-            if pref_element is None:
-                # Create a new preference element if it doesn't exist
-                pref_element = ET.SubElement(root, 'Preference', Name=pref_name)
+        for name, attrs in PREFERENCES.items():
+            pref = root.find(f".//Preference[@Name='{name}']")
+            if pref is None:
+                pref = ET.SubElement(root, "Preference", Name=name)
 
-            # Update attribute values
-            for attr_name, attr_value in pref_attrs.items():
-                pref_element.attrib[attr_name] = attr_value
-                # Check system options for overriding values
-                if pref_name == 'ps2.limitframerate' and (vsync := system.config.get('play_vsync')):
-                    pref_element.attrib['Value'] = vsync
-                if pref_name == 'renderer.widescreen' and (widescreen := system.config.get('play_widescreen')):
-                    pref_element.attrib['Value'] = widescreen
-                if pref_name == 'system.language' and (language := system.config.get('play_language')):
-                    pref_element.attrib['Value'] = language
-                if pref_name == 'video.gshandler' and (api := system.config.get('play_api')):
-                    pref_element.attrib['Value'] = api
-                if pref_name == 'renderer.opengl.resfactor' and (scale := system.config.get('play_scale')):
-                    pref_element.attrib['Value'] = scale
-                if pref_name == 'renderer.presentationmode' and (mode := system.config.get('play_mode')):
-                    pref_element.attrib['Value'] = mode
-                if pref_name == 'renderer.opengl.forcebilineartextures' and (filter := system.config.get('play_filter')):
-                    pref_element.attrib['Value'] = filter
+            pref.attrib.update(attrs)
 
-        # Write the updated configuration back to the file
-        tree = ET.ElementTree(root)
-        playConfigFile.parent.mkdir(parents=True, exist_ok=True)
-        tree.write(playConfigFile)
+            if override := OVERRIDES.get(name):
+                if value := system.config.get(override):
+                    pref.attrib["Value"] = value
 
-        evmapy = {
-            1: {
-                'a': [16],
-                'b': [17],
-                'x': [18],
-                'y': [19],
-                'start': [2],
-                'select': [6],
-                'pageup': [20],
-                'pagedown': [22],
-                'joystick1left': [105, 106],
-                'joystick1up': [103, 108],
-                'joystick1up_pedal': [23, 21],
-                'up': [103],
-                'down': [108],
-                'left': [105],
-                'right': [106],
-                'l2': [21],
-                'r2': [23],
-                'l3': [24],
-                'r3': [25],
-            },
-            2: {
-                'a': [30],
-                'b': [31],
-                'x': [32],
-                'y': [33],
-                'start': [3],
-                'select': [7],
-                'pageup': [34],
-                'pagedown': [36],
-                'joystick1left': [46, 47],
-                'joystick1up': [44, 45],
-                'up': [44],
-                'down': [45],
-                'left': [46],
-                'right': [47],
-                'l2': [35],
-                'r2': [37],
-                'l3': [38],
-                'r3': [39]
-            }
-        }
+        PLAY_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        ET.ElementTree(root).write(PLAY_CONFIG_FILE)
 
-        ## Default games mapping
-        #cross: button 1
-        #circle: button 2
-        #triangle : button3
-        #square : button4
-        #r3: button 5
-        #r2: button 6
-        playMapping = {
-            'square': 'y',
-            'triangle': 'x',
-            'circle': 'b',
-            'cross': 'a',
-            'start': 'start',
-            'select': 'select',
-            'l2':'pageup',
-            'r2':'pagedown',
-            'analog_left_x': 'joystick1left',
-            'analog_left_y': 'joystick1up',
-            'analog_right_x': 'joystick2left',
-            'analog_right_y': 'joystick2up',
-            'dpad_up': 'up',
-            'dpad_down': 'down',
-            'dpad_left': 'left',
-            'dpad_right': 'right',
-            'l1': 'l2',
-            'r1': 'r2',
-            'l3': 'l3',
-            'r3': 'r3'
-        }
+        # -------- input profiles --------
+        input_root = ET.Element("Config")
+        rom_str = str(rom)
 
-        if 'prdgp03' in str(rom):
-            playMapping['r1'] = 'y'
-            del playMapping['square']
-        elif 'fghtjam' in str(rom):
-            playMapping['triangle'] = 'l2'
-            playMapping['square'] = 'x'
-            playMapping['r3'] = 'y'
-            playMapping['r2'] = 'r2'
-        elif 'superdbz' in str(rom):
-            playMapping['square'] = 'x'
-            playMapping['r3'] = 'y'
-        elif 'tekken' in str(rom):
-            playMapping['square'] = 'x'
-            playMapping['r3'] = 'y'
-        elif 'acedriv3' in str(rom) or 'wangan' in str(rom):
-            playMapping['analog_left_y'] = 'joystick1up_pedal'
-            del playMapping['l1']
-            del playMapping['r1']
-
-        def create_input_binding_preferences(input_config, pad_guid, key_id, key_type, provider_id, nplayer, play_key, binding_target):
-            """Helper function to create XML preferences for joystick inputs."""
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.{binding_target}.deviceId",
-                          Type="string",
-                          Value=pad_guid)
-
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.{binding_target}.keyId",
-                          Type="integer",
-                          Value=str(key_id))
-
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.{binding_target}.keyType",
-                          Type="integer",
-                          Value=str(key_type))
-
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.{binding_target}.providerId",
-                          Type="integer",
-                          Value=str(provider_id))
-
-        def create_input_preferences(input_config, pad_guid, nplayer, joystick_name, binding_type, hat_value):
-            """Helper function to create XML preferences for joystick inputs."""
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.bindingtype",
-                          Type="integer",
-                          Value=str(binding_type))
-
-            ET.SubElement(input_config,
-                          "Preference",
-                          Name=f"input.pad{nplayer}.{play_key}.povhatbinding.refvalue",
-                          Type="integer",
-                          Value=str(hat_value))
-
-        input_config = ET.Element("Config")
-
-        # Iterate over connected controllers with a limit of 2 players
         for nplayer, controller in enumerate(playersControllers[:2], start=1):
-            dev = evdev.InputDevice(controller.device_path)
-            pad_guid = "1:0:1:0:1:0"
-            provider_id = 1702257782
+            evmap = build_evmap(nplayer)
+            play_mapping = PLAY_MAPPING_BASE.copy()
 
-            # Write this per pad
+            for needle, rule in GAME_MAPPING_RULES:
+                if needle in rom_str:
+                    rule(play_mapping)
+                    break
+
             ET.SubElement(
-                input_config,
+                input_root,
                 "Preference",
                 Name=f"input.pad{nplayer}.analog.sensitivity",
                 Type="float",
-                Value=str(1.000000)
+                Value="1.0",
             )
 
-            for play_key in playMapping:
-                joystick_key = playMapping[play_key]
-
-                if joystick_key not in evmapy[nplayer]:
+            for play_key, joystick_key in play_mapping.items():
+                if joystick_key not in evmap:
                     continue
 
-                evmapy_mapping = evmapy[nplayer][joystick_key]
-
-                binding_type = 1
-                #simulated axis
-                if len(evmapy_mapping) > 1:
-                    binding_type = 2
+                key_codes = evmap[joystick_key]
+                binding_type = 2 if len(key_codes) > 1 else 1
 
                 hat_value = -1
-                if play_key in ['dpad_up', 'dpad_left']:
+                if play_key in ("dpad_up", "dpad_left"):
                     hat_value = 4
-                elif play_key in ['dpad_down', 'dpad_right']:
+                elif play_key in ("dpad_down", "dpad_right"):
                     hat_value = 0
 
-                create_input_preferences(input_config, pad_guid, nplayer, play_key, binding_type, hat_value)
+                ET.SubElement(
+                    input_root,
+                    "Preference",
+                    Name=f"input.pad{nplayer}.{play_key}.bindingtype",
+                    Type="integer",
+                    Value=str(binding_type),
+                )
 
-                bindingtarget_index = 1
-                for key_code in evmapy_mapping:
-                    key_type = 0
-                    bindingtarget = f"bindingtarget{bindingtarget_index}"
-                    create_input_binding_preferences(input_config, pad_guid, key_code, key_type, provider_id, nplayer, play_key, bindingtarget)
-                    bindingtarget_index = bindingtarget_index + 1
+                ET.SubElement(
+                    input_root,
+                    "Preference",
+                    Name=f"input.pad{nplayer}.{play_key}.povhatbinding.refvalue",
+                    Type="integer",
+                    Value=str(hat_value),
+                )
 
-        # Save the controller settings to the specified input file
-        input_tree = ET.ElementTree(input_config)
-        ET.indent(input_tree, space="    ", level=0)
-        playInputFile.parent.mkdir(parents=True, exist_ok=True)
-        input_tree.write(playInputFile)
+                for idx, key_code in enumerate(key_codes, start=1):
+                    add_binding(input_root, nplayer, play_key, idx, key_code)
 
-        ## Prepare the command to run the emulator
-        commandArray: list[str | Path] = ["/userdata/system/dcg/namco2x6/appimage/play.AppImage", "--fullscreen"]
+        PLAY_INPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        tree = ET.ElementTree(input_root)
+        ET.indent(tree, space="    ", level=0)
+        tree.write(PLAY_INPUT_FILE)
+
+        # -------- command --------
+        cmd = [
+            Path("/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"),
+            "--fullscreen",
+        ]
 
         if not configure_emulator(rom):
-            # if zip, it's a namco arcade game
             if rom.suffix.lower() == ".zip":
-                # strip path & extension
-                commandArray.extend(["--arcade", Path(rom).stem])
+                cmd += ["--arcade", rom.stem]
             else:
-                commandArray.extend(["--disc", rom])
+                cmd += ["--disc", rom]
 
+        print(cmd, file=sys.stderr)
+         
         return Command.Command(
-            array=commandArray,
+            array=cmd,
             env={
-                "XDG_CONFIG_HOME": playConfig,
-                "XDG_DATA_HOME": playConfig,
+                "XDG_CONFIG_HOME": PLAY_CONFIG,
+                "XDG_DATA_HOME": PLAY_CONFIG,
                 "XDG_CACHE_HOME": CACHE,
-                "QT_QPA_PLATFORM": "xcb"
-            }
+                "QT_QPA_PLATFORM": "xcb",
+            },
         )
 
+
     def getInGameRatio(self, config, gameResolution, rom):
-        if config.get('play_widescreen') == "true" or config.get('play_mode') == "0":
-            return 16/9
-        return 4/3
+        if config.get("play_widescreen") == "true" or config.get("play_mode") == "0":
+            return 16 / 9
+        return 4 / 3
+# ------------------------------------------------------------
+# End of File
