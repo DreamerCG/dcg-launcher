@@ -1,0 +1,19 @@
+{
+	"id": "taiko13",
+	"name": "Taiko no Tatsujin 13",
+	"driver": "sys246",
+	"dongle":
+	{
+		"name": "NM00056 T1301-NA-A, Ver.A02 a026581390084a.bin"
+	},
+	"hdd":
+	{
+		"name": "tk13100-1-na-dvd0-a.chd"
+	},
+	"inputMode": "drum",
+	"eeFrequencyScale": [4, 3],
+	"boot": "ac0:T13LOAD0",
+	"patches":
+	[
+	]
+}

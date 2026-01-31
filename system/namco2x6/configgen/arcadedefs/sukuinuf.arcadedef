@@ -1,0 +1,17 @@
+{
+	"id": "sukuinuf",
+	"name": "すくすく犬福 2",
+	"driver": "sys246",
+	"dongle":
+	{
+		"name": "NM00037 IN2, Ver.A a000001000371a.bin"
+	},
+	"cdvd":
+	{
+		"name": "hm-in2.chd"
+	},
+	"boot": "mc0:DR2LOAD",
+	"patches":
+	[
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"id": "zoidiexp",
+	"name": "Zoids Infinity-EX/索斯机械兽:无限轰炸-EX",
+	"driver": "sys246",
+	"dongle":
+	{
+		"name": "NM00025 B3900108A, Ver.2.10JPN.bin"
+	},
+	"hdd":
+	{
+		"name": "zoidsinf-ex-plus-ver2-10.chd"
+	},
+                "eeFrequencyScale": [4, 3],
+	"boot": "ac0:ZO2LOAD",
+	"patches":
+	[
+	]
+}
+

@@ -1,0 +1,18 @@
+{
+	"id": "kinniku2",
+	"name": "Kinnikuman Muscle Grand Prix 2",
+	"driver": "sys246",
+	"dongle":
+	{
+		"name": "kn2vera.ic002"
+	},
+	"cdvd":
+	{
+		"name": "kn2.chd"
+	},
+	"eeFrequencyScale": [3, 2],
+	"boot": "ac0:KI2LOAD",
+	"patches":
+	[
+	]
+}

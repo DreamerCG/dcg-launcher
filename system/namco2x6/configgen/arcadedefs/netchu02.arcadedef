@@ -1,0 +1,18 @@
+{
+	"id": "netchu02",
+	"name": "Netchuu! Pro Baseball 2002",
+	"driver": "sys246",
+	"dongle":
+	{
+		"name": "npy1verb.ic002"
+	},
+	"dvd":
+	{
+		"name": "npy1cd0b.chd"
+	},
+	"eeFrequencyScale": [3, 2],
+	"boot": "ac0:NPBLOAD",
+	"patches":
+	[
+	]
+}

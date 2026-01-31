@@ -1,0 +1,17 @@
+{
+	"id": "minnadk",
+	"name": "Whole Brain Training With Everybody",
+	"dongle":
+	{
+		"name": "nm00036_znt100-1-st-a.bin"
+	},
+	"cdvd":
+	{
+		"name": "znt150-1-na-dvd0-b.chd"
+	},
+	"eeFrequencyScale": [4, 3],
+	"boot": "ac0:NTRLOAD",
+	"patches":
+	[
+	]
+}

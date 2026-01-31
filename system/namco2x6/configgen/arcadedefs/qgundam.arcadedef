@@ -1,0 +1,18 @@
+{
+	"id": "qgundam",
+	"name": "Mobile Suit Gundam Quiz Warrior",
+        "driver": "sys246",
+	"dongle":
+	{
+		"name": "NM00030 QG1, Ver.A a032737000093a.bin"
+	},
+	"cdvd":
+	{
+		"name": "qg1.chd"
+	},
+	"eeFrequencyScale": [3, 2],
+	"boot": "ac0:GQZLOAD",
+	"patches":
+	[
+	]
+}

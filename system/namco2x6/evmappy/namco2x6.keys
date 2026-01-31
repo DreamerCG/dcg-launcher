@@ -1,0 +1,240 @@
+{
+    "actions_player1": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "key",
+            "target": [
+                "KEY_LEFTALT",
+                "KEY_F4"
+            ]
+        },
+        {
+            "trigger": "joystick1up",
+            "type": "key",
+            "target": "KEY_UP"
+        },
+        {
+            "trigger": "joystick1down",
+            "type": "key",
+            "target": "KEY_DOWN"
+        },
+        {
+            "trigger": "joystick1left",
+            "type": "key",
+            "target": "KEY_LEFT"
+        },
+        {
+            "trigger": "joystick1right",
+            "type": "key",
+            "target": "KEY_RIGHT"
+        },
+        {
+            "trigger": "up",
+            "type": "key",
+            "target": "KEY_UP"
+        },
+        {
+            "trigger": "down",
+            "type": "key",
+            "target": "KEY_DOWN"
+        },
+        {
+            "trigger": "left",
+            "type": "key",
+            "target": "KEY_LEFT"
+        },
+        {
+            "trigger": "right",
+            "type": "key",
+            "target": "KEY_RIGHT"
+        },
+        {
+            "trigger": "start",
+            "type": "key",
+            "target": "KEY_1"
+        },
+        {
+            "trigger": "select",
+            "type": "key",
+            "target": "KEY_5"
+        },
+        {
+            "trigger": "a",
+            "type": "key",
+            "target": "KEY_R"
+        },
+        {
+            "trigger": "b",
+            "type": "key",
+            "target": "KEY_E"
+        },
+        {
+            "trigger": "x",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "y",
+            "type": "key",
+            "target": "KEY_Q"
+        },
+        {
+            "trigger": "pageup",
+            "type": "key",
+            "target": "KEY_T"
+        },
+        {
+            "trigger": "pagedown",
+            "type": "key",
+            "target": "KEY_Y"
+        },
+        {
+            "trigger": "l2",
+            "type": "key",
+            "target": "KEY_U"
+        },
+        {
+            "trigger": "r2",
+            "type": "key",
+            "target": "KEY_I"
+        },
+        {
+            "trigger": "l3",
+            "type": "key",
+            "target": "KEY_O"
+        },
+        {
+            "trigger": "r3",
+            "type": "key",
+            "target": "KEY_P"
+        }
+    ],
+    "actions_player2": [
+        {
+            "trigger": "b",
+            "type": "key",
+            "target": "KEY_D"
+        },
+        {
+            "trigger": "a",
+            "type": "key",
+            "target": "KEY_F"
+        },
+        {
+            "trigger": "x",
+            "type": "key",
+            "target": "KEY_S"
+        },
+        {
+            "trigger": "y",
+            "type": "key",
+            "target": "KEY_A"
+        },
+        {
+            "trigger": "pageup",
+            "type": "key",
+            "target": "KEY_G"
+        },
+        {
+            "trigger": "pagedown",
+            "type": "key",
+            "target": "KEY_H"
+        },
+        {
+            "trigger": "l2",
+            "type": "key",
+            "target": "KEY_J"
+        },
+        {
+            "trigger": "r2",
+            "type": "key",
+            "target": "KEY_K"
+        },
+        {
+            "trigger": "l3",
+            "type": "key",
+            "target": "KEY_L"
+        },
+        {
+            "trigger": "r3",
+            "type": "key",
+            "target": "KEY_SEMICOLON"
+        },
+        {
+            "trigger": "start",
+            "type": "key",
+            "target": "KEY_2"
+        },
+        {
+            "trigger": "select",
+            "type": "key",
+            "target": "KEY_6"
+        },
+        {
+            "trigger": "joystick1up",
+            "type": "key",
+            "target": "KEY_Z"
+        },
+        {
+            "trigger": "joystick1down",
+            "type": "key",
+            "target": "KEY_X"
+        },
+        {
+            "trigger": "joystick1left",
+            "type": "key",
+            "target": "KEY_C"
+        },
+        {
+            "trigger": "joystick1right",
+            "type": "key",
+            "target": "KEY_V"
+        },
+        {
+            "trigger": "up",
+            "type": "key",
+            "target": "KEY_Z"
+        },
+        {
+            "trigger": "down",
+            "type": "key",
+            "target": "KEY_X"
+        },
+        {
+            "trigger": "left",
+            "type": "key",
+            "target": "KEY_C"
+        },
+        {
+            "trigger": "right",
+            "type": "key",
+            "target": "KEY_V"
+        }
+    ]
+    ,"actions_gun1": [
+        {
+            "trigger": "left",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "right",
+            "type": "key",
+            "target": "KEY_E"
+        },
+        {
+            "trigger": "middle",
+            "type": "key",
+            "target": "KEY_5"
+        },
+        { 
+            "trigger": "1",
+            "type": "key",
+            "target": "KEY_5"
+        }
+    ]
+
+}

@@ -1,0 +1,18 @@
+{
+	"id": "gsd",
+	"name": "Mobile Suit Gundam SEED O.M.N.I. vs Z.A.F.T II",
+        "driver": "sys246",
+	"dongle":
+	{
+		"name": "NM00034 GSD1, Ver.A a000006000140a.bin"
+	},
+	"cdvd":
+	{
+		"name": "gsd1dvd0a.chd"
+	},
+	"eeFrequencyScale": [3, 2],
+	"boot": "mc0:SE2LOAD",
+	"patches":
+	[
+	]
+}
