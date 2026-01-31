@@ -66,3 +66,4 @@ rm -f /userdata/system/dcg/install.sh
 
 echo "System Launcher Installed!"
 
+killall -9 emulationstation || true
