@@ -37,11 +37,14 @@ set -e
 
 	# Retrieve and Extract BSA to /userdata/BSA (will overwrite)
 	temp_file=$(mktemp) || { echo "ERROR: Failed to create temp file"; exit 1; }
-	wget --quiet --show-progress --progress=bar:force:noscroll \
-		--tries=10 --timeout=30 --waitretry=3 \
-		--no-check-certificate --no-cache --no-cookies \
-		-O "$temp_file" \
-		"$url"
+	# wget --quiet --show-progress --progress=bar:force:noscroll \
+	# 	--tries=10 --timeout=30 --waitretry=3 \
+	# 	--no-check-certificate --no-cache --no-cookies \
+	# 	-O "$temp_file" \
+	# 	"$url"
+
+    curl -L -o "$temp_file" "$url"
+
 	[[ -n "$BSA_path" ]] && rm -rf "$BSA_path"
 	mkdir -p "$BSA_path"
 	tar -xzf "$temp_file" -C "$BSA_path" --strip-components=1
