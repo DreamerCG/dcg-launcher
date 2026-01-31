@@ -56,6 +56,16 @@ set -e
 cp -rf /userdata/system/dcg/system/namco2x6/config/es_systems_namco2x6.cfg /userdata/system/configs/emulationstation/es_systems_namco2x6.cfg
 cp -rf /userdata/system/dcg/system/namco2x6/evmapy/namco2x6.keys /userdata/system/configs/evmapy/namco2x6.keys
 
+# Téléchargement de l'AppImage
+mkdir -p /userdata/system/dcg/system/namco2x6/appimage
+wget --quiet --show-progress --progress=bar:force:noscroll \
+    --tries=10 --timeout=30 --waitretry=3 \
+    --no-check-certificate --no-cache --no-cookies \
+    -O "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage" \
+    --max-redirect=10 \
+    "https://purei.org/downloads/play/stable/0.72/Play!-8de4a71f-x86_64.AppImage"
+
+
 # Applications des droits
 chmod a+x "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
 #============= NAMCO 2x6 INSTALLATION =============#
