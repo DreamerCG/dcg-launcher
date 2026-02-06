@@ -85,6 +85,37 @@ chmod a+x "/userdata/system/dcg/bin/batocera-wine"
 # rm -rf /userdata/system/dcg/configs/evmapy
 # rm -rf /userdata/system/dcg/configs/emulationstations/
 
+# Variables
+BATOCERA_CONF="/userdata/system/batocera.conf"
+CUSTOM_CONF="/userdata/system/dcg/configs/advanced-arcade.conf"
+SECTION_START="# --- ARCADE ADVANCED CONFIG START ---"
+SECTION_END="# --- ARCADE ADVANCED CONFIG END ---"
+
+# Vérifie que les fichiers existent
+if [[ ! -f "$BATOCERA_CONF" ]]; then
+    echo "Erreur : $BATOCERA_CONF introuvable"
+    exit 1
+fi
+
+if [[ ! -f "$CUSTOM_CONF" ]]; then
+    echo "Erreur : $CUSTOM_CONF introuvable"
+    exit 1
+fi
+
+# Supprime l'ancienne section si elle existe
+sed -i "/$SECTION_START/,/$SECTION_END/d" "$BATOCERA_CONF"
+
+# Ajoute la nouvelle section à la fin
+{
+    echo ""
+    echo "$SECTION_START"
+    cat "$CUSTOM_CONF"
+    echo "$SECTION_END"
+} >> "$BATOCERA_CONF"
+
+echo "Injection terminée ✅"
+
+
 echo "System Launcher Installed!"
 
 killall -9 emulationstation || true
