@@ -1,0 +1,129 @@
+SYSTEM BIOS
+
+	BIOS VERSION
+	At the Test Menu, press Service 40 times.
+
+AIR TRIX
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	During attract mode hold Left and press:
+	Down, Down, Right, Down, Down, Right, Down, Right
+
+	COUNTRY SELECT
+	At the Game Test Menu press:
+	1P: Start, Service, Service, Start, Start, Service, Start
+
+	CHANGE WEB URL
+	At the Game Assignments Menu press:
+	1P: Service, Start, Start, Start, Start, Service, Service
+
+	CHANGE ROLL MODE
+	At the Game Assignments Menu enter WEB URL code and then press:
+	1P: Up, Down, Up, Down, Btn1, Btn2, Btn1, Btn2
+	Then hold 2P Start and press Test to change mode
+
+	PLAY SECRET CHARACTERS
+	Insert coin, hold Left and Right and press Start
+
+BRAVE FIREFIGHTERS
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	At the very first intro sequence screen ("PM 07:00...") press following sequence.
+	1P Water, 1P Water, 2P Water, 2P Water, 1P Fog, 2P Fog
+
+	COUNTRY MENU
+	At the Game Test Menu press:
+	1P Water, 1P Water, 1P Water, 1P Water, 1P Start, 1P Start, 1P Start, 2P Start, 2P Start, 2P Water
+	
+PLANET HARRIERS
+
+	COUNTRY SELECT
+	At the Game Test Menu press:
+	1P: Left, Right, Left, Right, Right, Left, Right, Left, Right, Right, Left, Left, Left, Right, Right, Left
+
+	ACTIVATE DEBUG MODE
+	Any time during the game hold Service, then press:
+	1P: Left, Left, Left, Left, Left, Left, Left, Left, Right, Right, Right, Right, Right, Right, Right, Right, Left, Left, Left, Left, Right, Right, Right, Right, Left, Left, Right, Right, Left, Right, Left, Right
+
+	DEBUG OSD
+	While debug mode active:
+	Pause game (1P Left+Right or 2P Start+Btn3) and then press P2 Btn4+Btn2. Unpause game (1P Left+Right or 1P Start + 2P Start)
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	Any time during the game press:
+	1P: Fire, Lock, Left, Right, Left, Lock, Right, Fire, Lock, Right
+
+	UNLOCK OPA-OPA CHARACTER
+	When selecting player, if you move the selection over X, then Nick, Cory, Glenn, Cory, Nick, Cory, Glenn, X, Cory and then Glenn again, you will be able to play the hidden character Opa-Opa.
+
+SEGA NASCAR
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	During attract mode enter a sequence of short and long pressings of the View change button (Down)
+	1P: Short, Short, Short, Long, Short, Long, Long, Long
+
+	COUNTRY SELECT
+	At the Game Test Menu enter a sequence of short and long pressings of the Down button
+	1P: Long, Short, Short, Long, Short, Short, Long, Short
+
+	UNLOCK EXTRA COURSE 'TEAM SEGA'
+	At course select screen shift gears 4-2-1-3, and step on the brake. Scroll right to see extra course.
+	
+	UNLOCK DALE EARNHARDT JR.
+	Select Dale Earnhardt, Sr, Car 3, put the shifter into 3rd gear and press on the brake pedal.
+
+	UNLOCK ADAM PETTY
+	Select Kyle Petty. Car 44, step on brake pedal and shift 4th, to neutral, to 4th.
+	
+	UNLOCK RICHARD PETTY
+	Select Kyle Petty, Car 44 and shift up to 1st gear.
+
+STAR WARS RACER ARCADE
+
+	COUNTRY SELECT
+	At the Game Test Menu, enter the FEATURES option and press:
+	1P: Start, Start, Start, Right, Left, Right, Start, Right, Left, Left, Start, Start, Start+Right.
+
+	UNLOCK BEN QUADINAROS
+	At the Game Test Menu, enter the FEATURES option and press:
+	1P: Left, Left, Left, Right, Start, Right, Start, Left, Start, Right, Left, Left, Left.
+	OR
+	Complete 50 Expert Races.
+	
+	UNLOCK GASGANO
+	At the Game Test Menu, enter the FEATURES option and press:
+	1P: Right, Right, Right, Left, Left, Start, Start, Start, Start, Right, Left, Left, Left.
+	OR
+	Play 700 games in total.
+
+	RESET SETTINGS
+	At the Game Test Menu, enter the FEATURES option and press:
+	1P: Start, Start, Start, Left, Right, Start, Start, Start.
+
+	UNKNOWN HIDDEN FEATURE
+	EEPROM 0x29 byte flag 0x80 set. Can't be enabled with code, but can be switched inside EEPROM and seems checked by the game somewhere.
+	Unused disabled cheat: Right, Right, Right, Left, Start, Left, Start, Right, Left, Left, Right, Right, Right.
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	At the Advertisement screen press:
+	1P: Right, Right, Right, Left, Right, Left, Right, Right, Brake, Right, Right, Right.
+
+VIRTUAL-ON 4: FORCE
+	GAME TEST MODE PASSWORDS:
+	20001210_MEGUMEGU 		SET VERSION:7.5
+	20010523_AYUAYU 		SET VERSION:7.6
+	20010702_YUUYUU 		SET VERSION:7.7
+	_LANDING_FORCE 			SET COUNTRY (use JP or US only, others have bugged tutorial texts)
+	___*STOP_VER 			SET VERSION:STOP OK
+	___*NONSTOP_VER 		SET VERSION:STOP NG
+	_FUTAGO 				SET GAME START MODE:NORMAL
+	_TANMATSU 				SET GAME START MODE:NORMAL
+	___*UNITE_VER 			SET GAME START MODE:UNITED
+	___*DEV_VER 			SET VERSION:DEVELOPER (doesn't work / disabled, at least in rev E)
+	note: "_" means space
+
+	SHOW SERIAL FOR MAIN BD AND ROM BD
+	Left lever: Up, Down, Down, Down, Right, Left, Right, Left, Turbo, Trigger
+
+	CRW CLEANING
+	Hold Right lever Down + Right + Turbo + Trigger + PIB (Left lever button3)
