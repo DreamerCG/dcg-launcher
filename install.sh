@@ -52,10 +52,10 @@ set -e
 )
 
 # Copier les fichiers de configuration des systèmes
-cp -rf /userdata/system/dcg/configs/emulationstations/ /userdata/system/configs/emulationstation/
+cp -rf /userdata/system/dcg/configs/emulationstations/* /userdata/system/configs/emulationstation/
 
 # Copier les fichiers de configuration des evmapy
-cp -rf /userdata/system/dcg/configs/evmapy /userdata/system/configs/evmapy/
+cp -rf /userdata/system/dcg/configs/evmapy/* /userdata/system/configs/evmapy/
 
 # Téléchargement de l'AppImage Play! (PS2 Emulator)
 mkdir -p /userdata/system/dcg/emulators/play/
@@ -69,7 +69,7 @@ wget --quiet --show-progress --progress=bar:force:noscroll \
 
 # Installation de Demul/Arcabview
 mkdir -p /userdata/system/dcg/emulators/demul/
-tar -xzvf /userdata/system/dcg/emulators/demul.tar.gz -C /userdata/system/dcg/emulators/demul/
+tar -xzf /userdata/system/dcg/emulators/demul.tar.gz -C /userdata/system/dcg/emulators/demul/
 
 # Applications des droits pour Play! (PS2 Emulator)
 chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
