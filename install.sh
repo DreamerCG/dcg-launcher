@@ -69,7 +69,7 @@ wget --quiet --show-progress --progress=bar:force:noscroll \
 
 # Installation de Demul/Arcabview
 mkdir -p /userdata/system/dcg/emulators/demul/
-tar -xzvf /userdata/system/dcg/emulators/demul.tar.gz /userdata/system/dcg/emulators/demul/
+tar -xzvf /userdata/system/dcg/emulators/demul.tar.gz -C /userdata/system/dcg/emulators/demul/
 
 # Applications des droits pour Play! (PS2 Emulator)
 chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
