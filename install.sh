@@ -51,27 +51,39 @@ set -e
 	rm -f "$temp_file"
 )
 
-#============= NAMCO 2x6 INSTALLATION =============#
-# Copier les fichiers de configuration 
-cp -rf /userdata/system/dcg/system/namco2x6/config/es_systems_namco2x6.cfg /userdata/system/configs/emulationstation/es_systems_namco2x6.cfg
-cp -rf /userdata/system/dcg/system/namco2x6/evmapy/namco2x6.keys /userdata/system/configs/evmapy/namco2x6.keys
+# Copier les fichiers de configuration des systèmes
+cp -rf /userdata/system/dcg/configs/emulationstations/ /userdata/system/configs/emulationstation/
 
-# Téléchargement de l'AppImage
-mkdir -p /userdata/system/dcg/system/namco2x6/appimage
+# Copier les fichiers de configuration des evmapy
+cp -rf /userdata/system/dcg/configs/evmapy /userdata/system/configs/evmapy/
+
+# Téléchargement de l'AppImage Play! (PS2 Emulator)
+mkdir -p /userdata/system/dcg/emulators/play/
 wget --quiet --show-progress --progress=bar:force:noscroll \
     --tries=10 --timeout=30 --waitretry=3 \
     --no-check-certificate --no-cache --no-cookies \
-    -O "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage" \
+    -O "/userdata/system/dcg/emulators/play/play.AppImage" \
     --max-redirect=10 \
     "https://purei.org/downloads/play/stable/0.72/Play!-8de4a71f-x86_64.AppImage"
 
 
-# Applications des droits
-chmod a+x "/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"
-#============= NAMCO 2x6 INSTALLATION =============#
+# Installation de Demul/Arcabview
+mkdir -p /userdata/system/dcg/emulators/demul/
+tar -tzvf demul.tar.gz /userdata/system/dcg/emulators/demul/
+
+# Applications des droits pour Play! (PS2 Emulator)
+chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
+
+# Applications des droits des binaries de BSA
+chmod a+x "/userdata/system/dcg/bin/batocera-wine"
 
 # Supression du fichier install par precautions
 rm -f /userdata/system/dcg/install.sh
+rm -f /userdata/system/dcg/demul.tar.gz
+
+# Nettoyage des fichiers de configuration temporaires
+rm -rf /userdata/system/dcg/configs/evmapy
+rm -rf /userdata/system/dcg/configs/emulationstations/
 
 echo "System Launcher Installed!"
 

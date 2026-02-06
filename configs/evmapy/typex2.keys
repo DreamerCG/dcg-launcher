@@ -1,0 +1,34 @@
+{
+    "actions_player1": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "exec",
+            "target": [ "/userdata/system/dcg/bin/batocera-wine windows stop" ]
+        }
+    ],
+    "actions_player2": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "exec",
+            "target": [ "/userdata/system/dcg/bin/batocera-wine windows stop" ]
+        }
+    ],
+    "actions_gun1": [
+        {
+            "trigger": ["left", "right", "middle"],
+            "type": "exec",
+            "hold": 2.0,
+            "target": "/userdata/system/dcg/bin/batocera-wine windows stop",
+            "description": "Exit emulator"
+        }
+    ]
+}
+
+
+

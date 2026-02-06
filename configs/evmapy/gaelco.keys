@@ -1,0 +1,178 @@
+{
+    "actions_player1": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "exec",
+            "target": "killall -9 demul.exe"
+        },
+        {
+            "trigger": "select",
+            "type": "key",
+            "target": "KEY_C"
+        },
+        {
+            "trigger": "joystick1left",
+            "type": "key",
+            "target": "KEY_A"
+        },
+        {
+            "trigger": "joystick1right",
+            "type": "key",
+            "target": "KEY_D"
+        },
+        {
+            "trigger": "start",
+            "type": "key",
+            "target": "KEY_ENTER"
+        },
+        {
+            "trigger": "left",
+            "type": "key",
+            "target": "KEY_A"
+        },
+        {
+            "trigger": "right",
+            "type": "key",
+            "target": "KEY_D"
+        },
+        {
+            "trigger": "a",
+            "type": "key",
+            "target": "KEY_1"
+        },
+        {
+            "trigger": "b",
+            "type": "key",
+            "target": "KEY_2"
+        },
+        {
+            "trigger": "joystick1up",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "joystick1down",
+            "type": "key",
+            "target": "KEY_S"
+        },
+        {
+            "trigger": "up",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "down",
+            "type": "key",
+            "target": "KEY_S"
+        },
+        {
+            "trigger": "x",
+            "type": "key",
+            "target": "KEY_3"
+        },
+        {
+            "trigger": "y",
+            "type": "key",
+            "target": "KEY_4"
+        },
+        {
+            "trigger": "r3",
+            "type": "key",
+            "target": [
+                "KEY_RIGHTALT",
+                "KEY_ENTER"
+            ]
+        }
+    ],
+    "actions_player2": [
+        {
+            "trigger": [
+                "hotkey",
+                "start"
+            ],
+            "type": "exec",
+            "target": "killall -9 demul.exe"
+        },
+        {
+            "trigger": "select",
+            "type": "key",
+            "target": "KEY_C"
+        },
+        {
+            "trigger": "joystick1left",
+            "type": "key",
+            "target": "KEY_A"
+        },
+        {
+            "trigger": "joystick1right",
+            "type": "key",
+            "target": "KEY_D"
+        },
+        {
+            "trigger": "start",
+            "type": "key",
+            "target": "KEY_ENTER"
+        },
+        {
+            "trigger": "left",
+            "type": "key",
+            "target": "KEY_A"
+        },
+        {
+            "trigger": "right",
+            "type": "key",
+            "target": "KEY_D"
+        },
+        {
+            "trigger": "a",
+            "type": "key",
+            "target": "KEY_1"
+        },
+        {
+            "trigger": "b",
+            "type": "key",
+            "target": "KEY_2"
+        },
+        {
+            "trigger": "joystick1up",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "joystick1down",
+            "type": "key",
+            "target": "KEY_S"
+        },
+        {
+            "trigger": "up",
+            "type": "key",
+            "target": "KEY_W"
+        },
+        {
+            "trigger": "down",
+            "type": "key",
+            "target": "KEY_S"
+        },
+        {
+            "trigger": "x",
+            "type": "key",
+            "target": "KEY_3"
+        },
+        {
+            "trigger": "y",
+            "type": "key",
+            "target": "KEY_4"
+        },
+        {
+            "trigger": "r3",
+            "type": "key",
+            "target": [
+                "KEY_RIGHTALT",
+                "KEY_ENTER"
+            ]
+        }
+    ]
+}

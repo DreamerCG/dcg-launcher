@@ -245,7 +245,7 @@ class PlayGenerator(Generator):
 
         # -------- command --------
         cmd = [
-            Path("/userdata/system/dcg/system/namco2x6/appimage/play.AppImage"),
+            Path("/userdata/system/dcg/emulators/play/play.AppImage"),
             "--fullscreen",
         ]
 
