@@ -78,12 +78,12 @@ chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
 chmod a+x "/userdata/system/dcg/bin/batocera-wine"
 
 # Supression du fichier install par precautions
-rm -f /userdata/system/dcg/install.sh
-rm -f /userdata/system/dcg/demul.tar.gz
+# rm -f /userdata/system/dcg/install.sh
+# rm -f /userdata/system/dcg/emulators/demul.tar.gz
 
 # Nettoyage des fichiers de configuration temporaires
-rm -rf /userdata/system/dcg/configs/evmapy
-rm -rf /userdata/system/dcg/configs/emulationstations/
+# rm -rf /userdata/system/dcg/configs/evmapy
+# rm -rf /userdata/system/dcg/configs/emulationstations/
 
 echo "System Launcher Installed!"
 
