@@ -74,6 +74,9 @@ tar -xzf /userdata/system/dcg/emulators/demul.tar.gz -C /userdata/system/dcg/emu
 # Applications des droits pour Play! (PS2 Emulator)
 chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
 
+# Applications des droits pour Play! (PS2 Emulator)
+chmod a+x "/userdata/system/dcg/emulators/shadps4/Shadps4-sdl.AppImage"
+
 # Applications des droits des binaries de BSA
 chmod a+x "/userdata/system/dcg/bin/batocera-wine"
 

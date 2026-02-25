@@ -38,6 +38,10 @@ def _new_get_generator(emulator: str):
         from generators.demul.demulGenerator import DemulGenerator
         return DemulGenerator()
 
+    if emulator == 'shadps4':
+        from generators.shadps4.shadPS4Generator import shadPS4Generator
+        return shadPS4Generator()
+
     #fallback to batocera generators
     return get_generator(emulator)
     
