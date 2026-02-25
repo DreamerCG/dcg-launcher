@@ -81,12 +81,12 @@ chmod a+x "/userdata/system/dcg/emulators/shadps4/Shadps4-sdl.AppImage"
 chmod a+x "/userdata/system/dcg/bin/batocera-wine"
 
 # Supression du fichier install par precautions
-# rm -f /userdata/system/dcg/install.sh
+rm -f /userdata/system/dcg/install.sh
 # rm -f /userdata/system/dcg/emulators/demul.tar.gz
 
 # Nettoyage des fichiers de configuration temporaires
-# rm -rf /userdata/system/dcg/configs/evmapy
-# rm -rf /userdata/system/dcg/configs/emulationstations/
+rm -rf /userdata/system/dcg/configs/evmapy
+rm -rf /userdata/system/dcg/configs/emulationstations/
 
 # Variables
 BATOCERA_CONF="/userdata/system/batocera.conf"
