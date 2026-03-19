@@ -11,11 +11,9 @@ from typing import TYPE_CHECKING
 import toml
 
 from configgen import Command as Command
-#from configgen.batoceraPaths import CONFIGS, configure_emulator, mkdir_if_not_exists
 from configgen.batoceraPaths import CONFIGS, BIOS, configure_emulator, HOME, mkdir_if_not_exists
 from configgen.controller import generate_sdl_game_controller_config
 from configgen.utils import vulkan
-# from . import vulkan
 from configgen.generators.Generator import Generator
 
 if TYPE_CHECKING:
