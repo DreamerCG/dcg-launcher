@@ -20,9 +20,23 @@ if "-rom" in sys.argv:
 if "-emulator" in sys.argv:
     emulator_name = sys.argv[sys.argv.index("-emulator") + 1]
 
+def _detect_batocera_version() -> int | None:
 
-def _new_get_generator(emulator: str):
+    try:
+        result = subprocess.run(
+            ["batocera-es-swissknife", "--version"],
+            capture_output=True, text=True, check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+    m = re.search(r"^\s*(\d+)", result.stdout)
+    if not m:
+        return None
+    return int(m.group(1))
     
+def _new_get_generator(emulator: str, core: str | None = None):
+
     print(f"Selected emulator: {emulator}", file=sys.stderr)    
     print(f"Selected Rom : {rom}", file=sys.stderr)    
 
@@ -41,6 +55,10 @@ def _new_get_generator(emulator: str):
     if emulator == 'shadps4':
         from generators.shadps4.shadPS4Generator import shadPS4Generator
         return shadPS4Generator()
+
+    if emulator == 'linuxloader':
+        from generators.linuxloader.linuxloaderGenerator import LinuxloaderGenerator
+        return LinuxloaderGenerator()
 
     #fallback to batocera generators
     return get_generator(emulator)

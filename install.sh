@@ -74,6 +74,13 @@ tar -xzf /userdata/system/dcg/emulators/demul.tar.gz -C /userdata/system/dcg/emu
 # Applications des droits pour Play! (PS2 Emulator)
 chmod a+x "/userdata/system/dcg/emulators/play/play.AppImage"
 
+# Applications des droits pour Linux Loader (Raw Thrills)
+chmod a+x "/userdata/system/dcg/emulators/linuxloader/halo_rt.so"
+chmod a+x "/userdata/system/dcg/emulators/linuxloader/linuxloader"
+chmod a+x "/userdata/system/dcg/emulators/linuxloader/linuxloader.so"
+chmod a+x "/userdata/system/dcg/emulators/linuxloader/lib/*"
+
+
 # Applications des droits pour Play! (PS2 Emulator)
 chmod a+x "/userdata/system/dcg/emulators/shadps4/Shadps4-sdl.AppImage"
 
